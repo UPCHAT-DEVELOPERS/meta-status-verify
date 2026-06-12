@@ -170,6 +170,12 @@
 				color: var(--muted);
 			}
 
+			.state-check {
+				margin-top: 8px;
+				font-size: 0.88rem;
+				color: var(--muted);
+			}
+
 			.count {
 				font-family: "Sora", sans-serif;
 				font-size: clamp(2rem, 5vw, 2.7rem);
@@ -203,6 +209,21 @@
 				border-radius: 14px;
 				border: 1px solid rgba(122, 147, 199, 0.22);
 				background: rgba(18, 30, 56, 0.7);
+			}
+
+			.incident-item.ok {
+				border-color: rgba(31, 138, 82, 0.35);
+				background: rgba(13, 63, 45, 0.34);
+			}
+
+			.incident-item.bad {
+				border-color: rgba(192, 57, 43, 0.45);
+				background: rgba(71, 18, 23, 0.35);
+			}
+
+			.incident-item.warn {
+				border-color: rgba(194, 122, 18, 0.45);
+				background: rgba(70, 49, 20, 0.36);
 			}
 
 			.incident-head {
@@ -291,11 +312,13 @@
 						</div>
 					</div>
 					<p class="last-update" id="lastUpdate">Aguardando dados...</p>
+					<p class="state-check" id="responseState">Validando estado das respostas...</p>
 				</article>
 
 				<article class="card">
 					<p class="count" id="incidentCount">--</p>
-					<p class="count-label">servicos com algum problema no momento</p>
+					<p class="count-label">servicos com instabilidade ativa</p>
+					<p class="count-label" id="resolvedCount">-- servicos ja resolvidos</p>
 				</article>
 			</section>
 
@@ -318,13 +341,21 @@
 			const statusText = document.getElementById("statusText");
 			const lastUpdate = document.getElementById("lastUpdate");
 			const incidentCount = document.getElementById("incidentCount");
+			const resolvedCount = document.getElementById("resolvedCount");
 			const content = document.getElementById("content");
 			const reloadBtn = document.getElementById("reloadBtn");
 			const reloadHelp = document.getElementById("reloadHelp");
+			const responseState = document.getElementById("responseState");
 
-			function humanStatus(raw) {
-				const value = String(raw || "").toLowerCase();
-				if (value.includes("operational")) {
+			function classifyState(rawStatus, rawDescription = "") {
+				const source = `${String(rawStatus || "")} ${String(rawDescription || "")}`.toLowerCase();
+
+				if (
+					source.includes("resolved") ||
+					source.includes("operational") ||
+					source.includes("restored") ||
+					source.includes("recovered")
+				) {
 					return {
 						label: "Tudo funcionando normalmente",
 						text: "Nao ha sinal de instabilidade relevante.",
@@ -332,7 +363,14 @@
 						level: "ok",
 					};
 				}
-				if (value.includes("minor")) {
+
+				if (
+					source.includes("minor") ||
+					source.includes("degraded") ||
+					source.includes("partial") ||
+					source.includes("investigating") ||
+					source.includes("monitoring")
+				) {
 					return {
 						label: "Alguma lentidao pontual",
 						text: "Pode haver pequenas falhas para parte dos usuarios.",
@@ -340,6 +378,7 @@
 						level: "warn",
 					};
 				}
+
 				return {
 					label: "Instabilidade importante em andamento",
 					text: "A Meta informou falhas que podem afetar envio, recebimento ou conexao.",
@@ -366,6 +405,13 @@
 				});
 			}
 
+			function latestPost(incident) {
+				const posts = Array.isArray(incident.posts) ? [...incident.posts] : [];
+				if (!posts.length) return null;
+				posts.sort((a, b) => new Date(b.time) - new Date(a.time));
+				return posts[0];
+			}
+
 			async function fetchOutages() {
 				try {
 					const direct = await fetch(API_URL, { cache: "no-store" });
@@ -386,16 +432,41 @@
 				}
 
 				const ordered = [...data].sort((a, b) => new Date(b.time) - new Date(a.time));
-				const latest = ordered[0];
-				const statusInfo = humanStatus(latest?.status);
+				const analyzed = ordered.map((incident, index) => {
+					const post = latestPost(incident);
+					const status = post?.status || incident.status || "Sem status";
+					const state = classifyState(status, post?.description || "");
+					return {
+						incident,
+						post,
+						index,
+						status,
+						state,
+					};
+				});
+
+				const active = analyzed.filter((item) => item.state.level !== "ok");
+				const resolved = analyzed.filter((item) => item.state.level === "ok");
+				const latest = analyzed[0];
+				const statusInfo =
+					active.length === 0
+						? {
+							label: "Status bom: sem incidentes ativos",
+							text: "Os avisos recentes estao como resolvidos ou operacionais.",
+							color: "var(--ok)",
+							level: "ok",
+						}
+						: latest?.state || classifyState("high disruptions");
 
 				statusDot.style.background = statusInfo.color;
 				statusTitle.textContent = statusInfo.label;
 				statusText.textContent = statusInfo.text;
-				lastUpdate.textContent = `Ultima atualizacao: ${formatDate(latest?.time)}`;
-				incidentCount.textContent = String(ordered.length);
+				lastUpdate.textContent = `Ultima atualizacao: ${formatDate(latest?.incident?.time)}`;
+				responseState.textContent = `Estados verificados: ${active.length} ativos, ${resolved.length} resolvidos/operacionais.`;
+				incidentCount.textContent = String(active.length);
+				resolvedCount.textContent = `${resolved.length} servicos ja resolvidos`;
 
-				if (ordered.length === 0) {
+				if (analyzed.length === 0) {
 					content.className = "empty";
 					content.textContent = "Nao ha alertas ativos neste momento.";
 					return;
@@ -404,21 +475,19 @@
 				const list = document.createElement("ul");
 				list.className = "incident-list";
 
-				ordered.slice(0, 8).forEach((incident, index) => {
-					const post = incident.posts && incident.posts[0] ? incident.posts[0] : null;
-					const title = friendlyTitle(post?.description, index);
-					const itemStatus = humanStatus(incident.status);
+				[...active, ...resolved].slice(0, 10).forEach((item) => {
+					const title = friendlyTitle(item.post?.description, item.index);
 
 					const li = document.createElement("li");
-					li.className = "incident-item";
+					li.className = `incident-item ${item.state.level}`;
 
 					li.innerHTML = `
 						<div class="incident-head">
 							<p class="incident-title">${title}</p>
-							<span class="badge" style="color:${itemStatus.color}">${incident.status || "Sem status"}</span>
+							<span class="badge" style="color:${item.state.color}">${item.status}</span>
 						</div>
-						<p class="incident-desc">${post?.description || "Sem descricao detalhada."}</p>
-						<p class="incident-desc"><strong>Atualizado:</strong> ${formatDate(incident.time)}</p>
+						<p class="incident-desc">${item.post?.description || "Sem descricao detalhada."}</p>
+						<p class="incident-desc"><strong>Atualizado:</strong> ${formatDate(item.incident.time)}</p>
 					`;
 
 					list.appendChild(li);
@@ -446,7 +515,9 @@
 					statusTitle.textContent = "Nao foi possivel consultar agora";
 					statusText.textContent = "Tente novamente em alguns minutos.";
 					lastUpdate.textContent = "Sem atualizacao recente";
+					responseState.textContent = "Nao foi possivel validar o estado das respostas.";
 					incidentCount.textContent = "--";
+					resolvedCount.textContent = "-- servicos ja resolvidos";
 
 					content.className = "error";
 					content.textContent =
