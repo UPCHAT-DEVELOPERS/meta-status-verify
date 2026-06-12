@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Status do WhatsApp Business API</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap"
+			rel="stylesheet"
+		/>
+		<style>
+			:root {
+				--bg: #050913;
+				--surface: #0c1324;
+				--card: rgba(16, 27, 50, 0.82);
+				--text: #eff3ff;
+				--muted: #a8b0c5;
+				--brand: #cc3366;
+				--brand-soft: rgba(204, 51, 102, 0.18);
+				--ok: #1f8a52;
+				--warn: #c27a12;
+				--bad: #c0392b;
+				--shadow: 0 28px 60px rgba(1, 5, 15, 0.42);
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+
+			body {
+				margin: 0;
+				min-height: 100vh;
+				font-family: "Plus Jakarta Sans", sans-serif;
+				background:
+					radial-gradient(circle at 12% 18%, rgba(58, 102, 224, 0.24), transparent 34%),
+					radial-gradient(circle at 88% 0%, rgba(204, 51, 102, 0.22), transparent 36%),
+					linear-gradient(180deg, #070d1c 0%, var(--bg) 100%);
+				color: var(--text);
+				display: grid;
+				place-items: center;
+				padding: 24px;
+			}
+
+			.container {
+				width: min(980px, 100%);
+				background: var(--surface);
+				border: 1px solid rgba(122, 147, 199, 0.18);
+				border-radius: 28px;
+				box-shadow: var(--shadow);
+				overflow: hidden;
+			}
+
+			.hero {
+				padding: 28px;
+				background:
+					radial-gradient(circle at 100% 0%, rgba(204, 51, 102, 0.25), transparent 42%),
+					linear-gradient(135deg, #0f1a31 0%, #101f3d 58%, #10274b 100%);
+				border-bottom: 1px solid rgba(122, 147, 199, 0.2);
+			}
+
+			.eyebrow {
+				font-size: 0.85rem;
+				color: var(--muted);
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				margin: 0 0 12px;
+			}
+
+			h1 {
+				margin: 0;
+				font-family: "Sora", sans-serif;
+				font-size: clamp(1.4rem, 2.8vw, 2.2rem);
+				line-height: 1.1;
+			}
+
+			.hero p {
+				margin: 10px 0 0;
+				color: var(--muted);
+			}
+
+			.status-grid {
+				display: grid;
+				grid-template-columns: 1.2fr 0.8fr;
+				gap: 16px;
+				padding: 20px 28px;
+			}
+
+			.actions {
+				margin-top: 16px;
+				display: flex;
+				gap: 10px;
+				align-items: center;
+				flex-wrap: wrap;
+			}
+
+			.reload-btn {
+				border: 1px solid rgba(204, 51, 102, 0.45);
+				background: linear-gradient(135deg, var(--brand) 0%, #e0447a 100%);
+				color: #fff;
+				font-family: "Sora", sans-serif;
+				font-weight: 600;
+				padding: 10px 14px;
+				border-radius: 12px;
+				cursor: pointer;
+				transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+				box-shadow: 0 10px 20px rgba(204, 51, 102, 0.2);
+			}
+
+			.reload-btn:hover {
+				transform: translateY(-1px);
+				box-shadow: 0 13px 24px rgba(204, 51, 102, 0.26);
+			}
+
+			.reload-btn:disabled {
+				opacity: 0.65;
+				cursor: wait;
+				transform: none;
+			}
+
+			.reload-help {
+				font-size: 0.9rem;
+				color: var(--muted);
+			}
+
+			.card {
+				background: var(--card);
+				border: 1px solid rgba(122, 147, 199, 0.18);
+				border-radius: 20px;
+				padding: 18px;
+				backdrop-filter: blur(4px);
+			}
+
+			.main-status {
+				display: flex;
+				align-items: center;
+				gap: 14px;
+			}
+
+			.dot {
+				width: 14px;
+				height: 14px;
+				border-radius: 50%;
+				flex: 0 0 auto;
+				box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.05);
+				animation: pulse 2.2s ease-in-out infinite;
+			}
+
+			@keyframes pulse {
+				0% { transform: scale(1); }
+				50% { transform: scale(1.15); }
+				100% { transform: scale(1); }
+			}
+
+			.status-title {
+				font-family: "Sora", sans-serif;
+				font-size: 1.3rem;
+				margin: 0;
+			}
+
+			.status-sub {
+				margin: 4px 0 0;
+				color: var(--muted);
+			}
+
+			.last-update {
+				margin-top: 12px;
+				font-size: 0.92rem;
+				color: var(--muted);
+			}
+
+			.count {
+				font-family: "Sora", sans-serif;
+				font-size: clamp(2rem, 5vw, 2.7rem);
+				margin: 0;
+			}
+
+			.count-label {
+				margin: 3px 0 0;
+				color: var(--muted);
+			}
+
+			.list-wrap {
+				padding: 0 28px 28px;
+			}
+
+			.list-title {
+				margin: 6px 0 12px;
+				font-family: "Sora", sans-serif;
+			}
+
+			.incident-list {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				display: grid;
+				gap: 10px;
+			}
+
+			.incident-item {
+				padding: 14px;
+				border-radius: 14px;
+				border: 1px solid rgba(122, 147, 199, 0.22);
+				background: rgba(18, 30, 56, 0.7);
+			}
+
+			.incident-head {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 8px;
+				flex-wrap: wrap;
+			}
+
+			.incident-title {
+				margin: 0;
+				font-weight: 700;
+			}
+
+			.badge {
+				font-size: 0.8rem;
+				font-weight: 700;
+				padding: 4px 8px;
+				border-radius: 999px;
+				background: var(--brand-soft);
+				border: 1px solid rgba(204, 51, 102, 0.2);
+			}
+
+			.incident-desc {
+				margin: 9px 0 0;
+				color: var(--muted);
+			}
+
+			.loading,
+			.error,
+			.empty {
+				padding: 16px;
+				border-radius: 14px;
+				border: 1px solid rgba(122, 147, 199, 0.22);
+				background: rgba(18, 30, 56, 0.7);
+				color: var(--muted);
+			}
+
+			.error {
+				border-color: rgba(192, 57, 43, 0.5);
+				color: #f3b8b2;
+			}
+
+			.footer {
+				padding: 0 28px 24px;
+				color: var(--muted);
+				font-size: 0.84rem;
+			}
+
+			@media (max-width: 760px) {
+				.status-grid {
+					grid-template-columns: 1fr;
+					padding: 16px;
+				}
+
+				.hero,
+				.list-wrap,
+				.footer {
+					padding-left: 16px;
+					padding-right: 16px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main class="container">
+			<section class="hero">
+				<p class="eyebrow">Painel de estabilidade Meta</p>
+                <img src="https://upchat.com.br/wp-content/uploads/2026/05/png2-2.png" alt="UPCHATLOGO" />
+				<h1>Como estao os servidores do WhatsApp Business agora</h1>
+				<p>Atualizacao oficial da Meta, explicada de forma clara.</p>
+				<div class="actions">
+					<button class="reload-btn" id="reloadBtn" type="button">Recarregar agora</button>
+					<span class="reload-help" id="reloadHelp">Ultima consulta manual: ainda nao realizada.</span>
+				</div>
+			</section>
+
+			<section class="status-grid">
+				<article class="card">
+					<div class="main-status">
+						<span class="dot" id="statusDot"></span>
+						<div>
+							<h2 class="status-title" id="statusTitle">Carregando status...</h2>
+							<p class="status-sub" id="statusText">Buscando informacoes mais recentes.</p>
+						</div>
+					</div>
+					<p class="last-update" id="lastUpdate">Aguardando dados...</p>
+				</article>
+
+				<article class="card">
+					<p class="count" id="incidentCount">--</p>
+					<p class="count-label">servicos com algum problema no momento</p>
+				</article>
+			</section>
+
+			<section class="list-wrap">
+				<h3 class="list-title">O que esta acontecendo</h3>
+				<div id="content" class="loading">Carregando comunicados oficiais...</div>
+			</section>
+
+			<footer class="footer">
+				Atualiza automaticamente a cada 2 minutos.
+			</footer>
+		</main>
+
+		<script>
+			const API_URL = "https://metastatus.com/data/outages/whatsapp-business-api.json";
+			const FALLBACK_PROXY = "https://api.allorigins.win/raw?url=";
+
+			const statusDot = document.getElementById("statusDot");
+			const statusTitle = document.getElementById("statusTitle");
+			const statusText = document.getElementById("statusText");
+			const lastUpdate = document.getElementById("lastUpdate");
+			const incidentCount = document.getElementById("incidentCount");
+			const content = document.getElementById("content");
+			const reloadBtn = document.getElementById("reloadBtn");
+			const reloadHelp = document.getElementById("reloadHelp");
+
+			function humanStatus(raw) {
+				const value = String(raw || "").toLowerCase();
+				if (value.includes("operational")) {
+					return {
+						label: "Tudo funcionando normalmente",
+						text: "Nao ha sinal de instabilidade relevante.",
+						color: "var(--ok)",
+						level: "ok",
+					};
+				}
+				if (value.includes("minor")) {
+					return {
+						label: "Alguma lentidao pontual",
+						text: "Pode haver pequenas falhas para parte dos usuarios.",
+						color: "var(--warn)",
+						level: "warn",
+					};
+				}
+				return {
+					label: "Instabilidade importante em andamento",
+					text: "A Meta informou falhas que podem afetar envio, recebimento ou conexao.",
+					color: "var(--bad)",
+					level: "bad",
+				};
+			}
+
+			function friendlyTitle(description, index) {
+				if (!description) return `Servico ${index + 1}`;
+				const match = description.match(/impacting\s+([^\.]+)/i);
+				if (match && match[1]) {
+					return `Problema em ${match[1].trim()}`;
+				}
+				return `Servico ${index + 1}`;
+			}
+
+			function formatDate(isoDate) {
+				if (!isoDate) return "Sem horario informado";
+				const date = new Date(isoDate);
+				return date.toLocaleString("pt-BR", {
+					dateStyle: "short",
+					timeStyle: "short",
+				});
+			}
+
+			async function fetchOutages() {
+				try {
+					const direct = await fetch(API_URL, { cache: "no-store" });
+					if (!direct.ok) throw new Error("Falha no endpoint principal");
+					return await direct.json();
+				} catch (_err) {
+					const viaProxy = await fetch(`${FALLBACK_PROXY}${encodeURIComponent(API_URL)}`, {
+						cache: "no-store",
+					});
+					if (!viaProxy.ok) throw new Error("Falha no endpoint alternativo");
+					return await viaProxy.json();
+				}
+			}
+
+			function render(data) {
+				if (!Array.isArray(data)) {
+					throw new Error("Resposta inesperada da API.");
+				}
+
+				const ordered = [...data].sort((a, b) => new Date(b.time) - new Date(a.time));
+				const latest = ordered[0];
+				const statusInfo = humanStatus(latest?.status);
+
+				statusDot.style.background = statusInfo.color;
+				statusTitle.textContent = statusInfo.label;
+				statusText.textContent = statusInfo.text;
+				lastUpdate.textContent = `Ultima atualizacao: ${formatDate(latest?.time)}`;
+				incidentCount.textContent = String(ordered.length);
+
+				if (ordered.length === 0) {
+					content.className = "empty";
+					content.textContent = "Nao ha alertas ativos neste momento.";
+					return;
+				}
+
+				const list = document.createElement("ul");
+				list.className = "incident-list";
+
+				ordered.slice(0, 8).forEach((incident, index) => {
+					const post = incident.posts && incident.posts[0] ? incident.posts[0] : null;
+					const title = friendlyTitle(post?.description, index);
+					const itemStatus = humanStatus(incident.status);
+
+					const li = document.createElement("li");
+					li.className = "incident-item";
+
+					li.innerHTML = `
+						<div class="incident-head">
+							<p class="incident-title">${title}</p>
+							<span class="badge" style="color:${itemStatus.color}">${incident.status || "Sem status"}</span>
+						</div>
+						<p class="incident-desc">${post?.description || "Sem descricao detalhada."}</p>
+						<p class="incident-desc"><strong>Atualizado:</strong> ${formatDate(incident.time)}</p>
+					`;
+
+					list.appendChild(li);
+				});
+
+				content.className = "";
+				content.innerHTML = "";
+				content.appendChild(list);
+			}
+
+			async function load(isManual = false) {
+				reloadBtn.disabled = true;
+				reloadBtn.textContent = "Atualizando...";
+				content.className = "loading";
+				content.textContent = "Carregando comunicados oficiais...";
+
+				try {
+					const data = await fetchOutages();
+					render(data);
+					if (isManual) {
+						reloadHelp.textContent = `Ultima consulta manual: ${new Date().toLocaleTimeString("pt-BR")}`;
+					}
+				} catch (err) {
+					statusDot.style.background = "var(--bad)";
+					statusTitle.textContent = "Nao foi possivel consultar agora";
+					statusText.textContent = "Tente novamente em alguns minutos.";
+					lastUpdate.textContent = "Sem atualizacao recente";
+					incidentCount.textContent = "--";
+
+					content.className = "error";
+					content.textContent =
+						"Nao conseguimos carregar os dados da Meta neste momento. Verifique sua conexao e tente recarregar a pagina.";
+					console.error(err);
+				} finally {
+					reloadBtn.disabled = false;
+					reloadBtn.textContent = "Recarregar agora";
+				}
+			}
+
+			reloadBtn.addEventListener("click", () => load(true));
+			load();
+			setInterval(load, 120000);
+		</script>
+	</body>
+</html>
