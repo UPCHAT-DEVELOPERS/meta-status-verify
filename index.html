@@ -10,6 +10,9 @@
 			href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap"
 			rel="stylesheet"
 		/>
+		<link rel="icon" href="https://upchat.com.br/wp-content/uploads/2026/05/fav-150x150.png" sizes="32x32">
+		<link rel="icon" href="https://upchat.com.br/wp-content/uploads/2026/05/fav-300x300.png" sizes="192x192">
+		<link rel="apple-touch-icon" href="https://upchat.com.br/wp-content/uploads/2026/05/fav-300x300.png">
 		<style>
 			:root {
 				--bg: #050913;
@@ -44,7 +47,7 @@
 			}
 
 			.container {
-				width: min(980px, 100%);
+				width: min(1100px, 100%);
 				background: var(--surface);
 				border: 1px solid rgba(122, 147, 199, 0.18);
 				border-radius: 28px;
@@ -77,6 +80,89 @@
 
 			.hero p {
 				margin: 10px 0 0;
+				color: var(--muted);
+			}
+
+			.hero-top {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 16px;
+				flex-wrap: wrap;
+			}
+
+			.logo-wrap img {
+				height: 42px;
+				width: auto;
+				display: block;
+			}
+
+			.lang-switch {
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+				padding: 4px;
+				border: 1px solid rgba(122, 147, 199, 0.3);
+				border-radius: 999px;
+				background: rgba(12, 22, 42, 0.62);
+			}
+
+			.lang-btn {
+				border: 0;
+				border-radius: 999px;
+				padding: 7px 12px;
+				font-family: "Sora", sans-serif;
+				font-size: 0.78rem;
+				font-weight: 700;
+				letter-spacing: 0.03em;
+				background: transparent;
+				color: var(--muted);
+				cursor: pointer;
+			}
+
+			.lang-btn.active {
+				background: linear-gradient(135deg, var(--brand) 0%, #e0447a 100%);
+				color: #fff;
+			}
+
+			.guide-grid {
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: 10px;
+				margin-top: 16px;
+			}
+
+			.guide-item {
+				border-radius: 12px;
+				border: 1px solid rgba(122, 147, 199, 0.24);
+				background: rgba(18, 30, 56, 0.5);
+				padding: 10px 12px;
+				display: flex;
+				gap: 10px;
+				align-items: flex-start;
+			}
+
+			.guide-dot {
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+				margin-top: 4px;
+				flex: 0 0 auto;
+			}
+
+			.guide-dot.ok { background: var(--ok); }
+			.guide-dot.warn { background: var(--warn); }
+			.guide-dot.bad { background: var(--bad); }
+
+			.guide-title {
+				margin: 0;
+				font-family: "Sora", sans-serif;
+				font-size: 0.88rem;
+			}
+
+			.guide-text {
+				margin: 4px 0 0;
+				font-size: 0.82rem;
 				color: var(--muted);
 			}
 
@@ -191,9 +277,27 @@
 				padding: 0 28px 28px;
 			}
 
+			.section-spacer {
+				padding-top: 2px;
+			}
+
 			.list-title {
 				margin: 6px 0 12px;
 				font-family: "Sora", sans-serif;
+			}
+
+			.section-head {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 10px;
+				flex-wrap: wrap;
+			}
+
+			.section-sub {
+				margin: -4px 0 12px;
+				font-size: 0.9rem;
+				color: var(--muted);
 			}
 
 			.incident-list {
@@ -246,6 +350,27 @@
 				border-radius: 999px;
 				background: var(--brand-soft);
 				border: 1px solid rgba(204, 51, 102, 0.2);
+				color: var(--text);
+			}
+
+			.badge.ok {
+				background: rgba(31, 138, 82, 0.2);
+				border-color: rgba(31, 138, 82, 0.4);
+			}
+
+			.badge.warn {
+				background: rgba(194, 122, 18, 0.2);
+				border-color: rgba(194, 122, 18, 0.4);
+			}
+
+			.badge.bad {
+				background: rgba(192, 57, 43, 0.2);
+				border-color: rgba(192, 57, 43, 0.45);
+			}
+
+			.badge.neutral {
+				background: rgba(122, 147, 199, 0.2);
+				border-color: rgba(122, 147, 199, 0.34);
 			}
 
 			.incident-desc {
@@ -268,6 +393,39 @@
 				color: #f3b8b2;
 			}
 
+			.simple-grid {
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: 10px;
+				margin-bottom: 12px;
+			}
+
+			.simple-card {
+				padding: 12px;
+				border-radius: 12px;
+				border: 1px solid rgba(122, 147, 199, 0.22);
+				background: rgba(18, 30, 56, 0.6);
+			}
+
+			.simple-label {
+				margin: 0;
+				font-size: 0.8rem;
+				color: var(--muted);
+			}
+
+			.simple-value {
+				margin: 4px 0 0;
+				font-family: "Sora", sans-serif;
+				font-size: 1.3rem;
+			}
+
+			.panel {
+				border: 1px solid rgba(122, 147, 199, 0.18);
+				border-radius: 18px;
+				padding: 14px;
+				background: rgba(14, 24, 46, 0.5);
+			}
+
 			.footer {
 				padding: 0 28px 24px;
 				color: var(--muted);
@@ -275,9 +433,21 @@
 			}
 
 			@media (max-width: 760px) {
+				.hero-top {
+					align-items: flex-start;
+				}
+
+				.guide-grid {
+					grid-template-columns: 1fr;
+				}
+
 				.status-grid {
 					grid-template-columns: 1fr;
 					padding: 16px;
+				}
+
+				.simple-grid {
+					grid-template-columns: 1fr;
 				}
 
 				.hero,
@@ -292,13 +462,44 @@
 	<body>
 		<main class="container">
 			<section class="hero">
-				<p class="eyebrow">Painel de estabilidade Meta</p>
-                <img src="https://upchat.com.br/wp-content/uploads/2026/05/png2-2.png" alt="UPCHATLOGO" />
-				<h1>Como estao os servidores do WhatsApp Business agora</h1>
-				<p>Atualizacao oficial da Meta, explicada de forma clara.</p>
+				<p class="eyebrow" id="eyebrowText">Painel de estabilidade UPCHAT</p>
+				<div class="hero-top">
+					<div class="logo-wrap">
+						<img src="https://upchat.com.br/wp-content/uploads/2026/05/png2-2.png" alt="UPCHATLOGO" />
+					</div>
+					<div class="lang-switch" role="group" aria-label="Selecao de idioma">
+						<button class="lang-btn active" id="langPt" type="button">PT-BR</button>
+						<button class="lang-btn" id="langEs" type="button">ES-LATAM</button>
+					</div>
+				</div>
+				<h1 id="mainTitle">Status de Servicos</h1>
+				<p id="mainSubtitle">Atualizacao oficial da Meta e da Cloudflare, explicada de forma simples para decisao rapida.</p>
 				<div class="actions">
 					<button class="reload-btn" id="reloadBtn" type="button">Recarregar agora</button>
 					<span class="reload-help" id="reloadHelp">Ultima consulta manual: ainda nao realizada.</span>
+				</div>
+				<div class="guide-grid" aria-label="Guia de leitura dos status">
+					<div class="guide-item">
+						<span class="guide-dot ok"></span>
+						<div>
+							<p class="guide-title" id="guideOkTitle">Verde: operacao normal</p>
+							<p class="guide-text" id="guideOkText">Sem impacto relevante para clientes neste momento.</p>
+						</div>
+					</div>
+					<div class="guide-item">
+						<span class="guide-dot warn"></span>
+						<div>
+							<p class="guide-title" id="guideWarnTitle">Amarelo: atencao</p>
+							<p class="guide-text" id="guideWarnText">Pode haver lentidao ou falhas pontuais em parte do trafego.</p>
+						</div>
+					</div>
+					<div class="guide-item">
+						<span class="guide-dot bad"></span>
+						<div>
+							<p class="guide-title" id="guideBadTitle">Vermelho: instabilidade</p>
+							<p class="guide-text" id="guideBadText">Existe impacto ativo e pode afetar envio, recebimento ou conexao.</p>
+						</div>
+					</div>
 				</div>
 			</section>
 
@@ -317,17 +518,49 @@
 
 				<article class="card">
 					<p class="count" id="incidentCount">--</p>
-					<p class="count-label">servicos com instabilidade ativa</p>
+					<p class="count-label" id="activeCountLabel">servicos com instabilidade ativa</p>
 					<p class="count-label" id="resolvedCount">-- servicos ja resolvidos</p>
 				</article>
 			</section>
 
 			<section class="list-wrap">
-				<h3 class="list-title">O que esta acontecendo</h3>
-				<div id="content" class="loading">Carregando comunicados oficiais...</div>
+				<div class="panel">
+					<div class="section-head">
+						<h3 class="list-title" id="metaTitle">Meta: o que esta acontecendo</h3>
+						<span class="badge neutral" id="metaSource">Fonte: Meta Status</span>
+					</div>
+					<p class="section-sub" id="metaSub">Comunicados oficiais ordenados por prioridade para facilitar acao rapida.</p>
+					<div id="content" class="loading">Carregando comunicados oficiais...</div>
+				</div>
 			</section>
 
-			<footer class="footer">
+			<section class="list-wrap section-spacer">
+				<div class="panel">
+					<div class="section-head">
+						<h3 class="list-title" id="cfTitle">Cloudflare: infraestrutura global</h3>
+						<span class="badge neutral" id="cfSource">Fonte: Cloudflare Status</span>
+					</div>
+					<p class="section-sub" id="cfSub">Visao resumida de todos os servicos para identificar rapidamente onde existe risco.</p>
+					<div class="simple-grid">
+						<div class="simple-card">
+							<p class="simple-label" id="cfOverallLabel">Estado geral</p>
+							<p class="simple-value" id="cfOverall">Carregando...</p>
+						</div>
+						<div class="simple-card">
+							<p class="simple-label" id="cfAffectedLabel">Servicos com alerta</p>
+							<p class="simple-value" id="cfAffected">--</p>
+						</div>
+						<div class="simple-card">
+							<p class="simple-label" id="cfStableLabel">Servicos estaveis</p>
+							<p class="simple-value" id="cfStable">--</p>
+						</div>
+					</div>
+					<div id="cfState" class="state-check">Validando estado dos servicos Cloudflare...</div>
+					<div id="cfContent" class="loading">Carregando status Cloudflare...</div>
+				</div>
+			</section>
+
+			<footer class="footer" id="footerText">
 				Atualiza automaticamente a cada 2 minutos.
 			</footer>
 		</main>
@@ -335,6 +568,7 @@
 		<script>
 			const API_URL = "https://metastatus.com/data/outages/whatsapp-business-api.json";
 			const FALLBACK_PROXY = "https://api.allorigins.win/raw?url=";
+			const CLOUDFLARE_STATUS_URL = "https://www.cloudflarestatus.com/api/v2/summary.json";
 
 			const statusDot = document.getElementById("statusDot");
 			const statusTitle = document.getElementById("statusTitle");
@@ -346,6 +580,240 @@
 			const reloadBtn = document.getElementById("reloadBtn");
 			const reloadHelp = document.getElementById("reloadHelp");
 			const responseState = document.getElementById("responseState");
+			const cfOverall = document.getElementById("cfOverall");
+			const cfAffected = document.getElementById("cfAffected");
+			const cfStable = document.getElementById("cfStable");
+			const cfState = document.getElementById("cfState");
+			const cfContent = document.getElementById("cfContent");
+			const langPt = document.getElementById("langPt");
+			const langEs = document.getElementById("langEs");
+
+			const TEXTS = {
+				pt: {
+					eyebrowText: "Painel de estabilidade UPCHAT",
+					mainTitle: "Status de Servicos",
+					mainSubtitle: "Atualizacao oficial da Meta e da Cloudflare, explicada de forma simples para decisao rapida.",
+					reloadNow: "Recarregar agora",
+					reloading: "Atualizando...",
+					reloadHelpInitial: "Ultima consulta manual: ainda nao realizada.",
+					reloadHelpPrefix: "Ultima consulta manual:",
+					guideOkTitle: "Verde: operacao normal",
+					guideOkText: "Sem impacto relevante para clientes neste momento.",
+					guideWarnTitle: "Amarelo: atencao",
+					guideWarnText: "Pode haver lentidao ou falhas pontuais em parte do trafego.",
+					guideBadTitle: "Vermelho: instabilidade",
+					guideBadText: "Existe impacto ativo e pode afetar envio, recebimento ou conexao.",
+					loadingStatus: "Carregando status...",
+					loadingDetails: "Buscando informacoes mais recentes.",
+					loadingWait: "Aguardando dados...",
+					loadingValidation: "Validando estado das respostas...",
+					activeCountLabel: "servicos com instabilidade ativa",
+					resolvedCountSuffix: "servicos ja resolvidos",
+					metaTitle: "Meta: o que esta acontecendo",
+					metaSource: "Fonte: Meta Status",
+					metaSub: "Comunicados oficiais ordenados por prioridade para facilitar acao rapida.",
+					cfTitle: "Cloudflare: infraestrutura global",
+					cfSource: "Fonte: Cloudflare Status",
+					cfSub: "Visao resumida de todos os servicos para identificar rapidamente onde existe risco.",
+					cfOverallLabel: "Estado geral",
+					cfAffectedLabel: "Servicos com alerta",
+					cfStableLabel: "Servicos estaveis",
+					footerText: "Atualiza automaticamente a cada 2 minutos.",
+					metaLoadingContent: "Carregando comunicados oficiais...",
+					cfLoadingContent: "Carregando status Cloudflare...",
+					okLabel: "Tudo funcionando normalmente",
+					okText: "Nao ha sinal de instabilidade relevante.",
+					warnLabel: "Alguma lentidao pontual",
+					warnText: "Pode haver pequenas falhas para parte dos usuarios.",
+					badLabel: "Instabilidade importante em andamento",
+					badText: "A Meta informou falhas que podem afetar envio, recebimento ou conexao.",
+					servicePrefix: "Servico",
+					problemInPrefix: "Problema em",
+					noTime: "Sem horario informado",
+					statusNone: "Sem status",
+					statusOperational: "Operacional",
+					statusResolved: "Resolvido",
+					statusDegraded: "Degradado",
+					statusPartial: "Parcial",
+					statusInvestigating: "Investigando",
+					statusMonitoring: "Monitorando",
+					statusMajor: "Falha maior",
+					statusMinor: "Falha menor",
+					statusOutage: "Indisponivel",
+					statusCritical: "Critico",
+					cfAllStable: "Todos estaveis",
+					cfAllStableText: "A Cloudflare informa operacao normal no momento.",
+					cfOscillation: "Oscilacao pontual",
+					cfOscillationText: "Existe alerta leve e parte dos usuarios pode perceber lentidao.",
+					cfImportantInstability: "Instabilidade importante",
+					cfImportantInstabilityText: "A Cloudflare reporta impacto relevante em servicos.",
+					cfInAnalysis: "Em analise",
+					cfInAnalysisText: "Recebemos um estado fora do padrao e seguimos monitorando.",
+					responseUnexpectedApi: "Resposta inesperada da API.",
+					responseUnexpectedCf: "Resposta inesperada da Cloudflare.",
+					globalGoodStatus: "Status bom: sem incidentes ativos",
+					globalGoodText: "Os avisos recentes estao como resolvidos ou operacionais.",
+					lastUpdatePrefix: "Ultima atualizacao:",
+					statesCheckedPrefix: "Estados verificados:",
+					statesCheckedActive: "ativos",
+					statesCheckedResolved: "resolvidos/operacionais",
+					emptyNoAlerts: "Nao ha alertas ativos neste momento.",
+					noDescriptionDetailed: "Sem descricao detalhada.",
+					updatedAtLabel: "Atualizado:",
+					cfUnknownStatus: "sem status",
+					cfNoDetails: "Sem detalhes no momento.",
+					cfWithAlerts: "com alerta",
+					cfStablePlural: "estaveis",
+					cfNoComponents: "Cloudflare sem componentes detalhados nesta consulta.",
+					cfNoQuery: "Sem consulta",
+					cfValidationFailed: "Nao foi possivel validar os servicos Cloudflare agora.",
+					cfErrorContent: "Nao conseguimos consultar o status Cloudflare neste momento. O painel Meta continua ativo e atualizando normalmente.",
+					metaConsultFailedTitle: "Nao foi possivel consultar agora",
+					metaConsultFailedText: "Tente novamente em alguns minutos.",
+					metaNoRecentUpdate: "Sem atualizacao recente",
+					metaStateValidationFailed: "Nao foi possivel validar o estado das respostas.",
+					metaErrorContent: "Nao conseguimos carregar os dados da Meta neste momento. Verifique sua conexao e tente recarregar a pagina.",
+				},
+				es: {
+					eyebrowText: "Panel ejecutivo de estabilidad UPCHAT",
+					mainTitle: "Estado de Servicios",
+					mainSubtitle: "Actualizacion oficial de Meta y Cloudflare, explicada de forma simple para decisiones rapidas.",
+					reloadNow: "Actualizar ahora",
+					reloading: "Actualizando...",
+					reloadHelpInitial: "Ultima consulta manual: aun no realizada.",
+					reloadHelpPrefix: "Ultima consulta manual:",
+					guideOkTitle: "Verde: operacion normal",
+					guideOkText: "Sin impacto relevante para clientes en este momento.",
+					guideWarnTitle: "Amarillo: atencion",
+					guideWarnText: "Puede haber lentitud o fallas puntuales en parte del trafico.",
+					guideBadTitle: "Rojo: inestabilidad",
+					guideBadText: "Hay impacto activo y puede afectar envio, recepcion o conexion.",
+					loadingStatus: "Cargando estado...",
+					loadingDetails: "Buscando informacion mas reciente.",
+					loadingWait: "Esperando datos...",
+					loadingValidation: "Validando estado de las respuestas...",
+					activeCountLabel: "servicios con inestabilidad activa",
+					resolvedCountSuffix: "servicios ya resueltos",
+					metaTitle: "Meta: que esta pasando",
+					metaSource: "Fuente: Meta Status",
+					metaSub: "Comunicados oficiales ordenados por prioridad para facilitar accion rapida.",
+					cfTitle: "Cloudflare: infraestructura global",
+					cfSource: "Fuente: Cloudflare Status",
+					cfSub: "Vision resumida de todos los servicios para identificar rapidamente donde hay riesgo.",
+					cfOverallLabel: "Estado general",
+					cfAffectedLabel: "Servicios con alerta",
+					cfStableLabel: "Servicios estables",
+					footerText: "Actualiza automaticamente cada 2 minutos.",
+					metaLoadingContent: "Cargando comunicados oficiales...",
+					cfLoadingContent: "Cargando estado de Cloudflare...",
+					okLabel: "Todo funcionando normalmente",
+					okText: "No hay senal de inestabilidad relevante.",
+					warnLabel: "Lentitud puntual",
+					warnText: "Puede haber pequenas fallas para parte de los usuarios.",
+					badLabel: "Inestabilidad importante en curso",
+					badText: "Meta informo fallas que pueden afectar envio, recepcion o conexion.",
+					servicePrefix: "Servicio",
+					problemInPrefix: "Problema en",
+					noTime: "Sin horario informado",
+					statusNone: "Sin estado",
+					statusOperational: "Operativo",
+					statusResolved: "Resuelto",
+					statusDegraded: "Degradado",
+					statusPartial: "Parcial",
+					statusInvestigating: "Investigando",
+					statusMonitoring: "Monitoreando",
+					statusMajor: "Falla mayor",
+					statusMinor: "Falla menor",
+					statusOutage: "No disponible",
+					statusCritical: "Critico",
+					cfAllStable: "Todos estables",
+					cfAllStableText: "Cloudflare informa operacion normal en este momento.",
+					cfOscillation: "Oscilacion puntual",
+					cfOscillationText: "Existe alerta leve y parte de los usuarios puede notar lentitud.",
+					cfImportantInstability: "Inestabilidad importante",
+					cfImportantInstabilityText: "Cloudflare reporta impacto relevante en servicios.",
+					cfInAnalysis: "En analisis",
+					cfInAnalysisText: "Recibimos un estado fuera del patron y seguimos monitoreando.",
+					responseUnexpectedApi: "Respuesta inesperada de la API.",
+					responseUnexpectedCf: "Respuesta inesperada de Cloudflare.",
+					globalGoodStatus: "Buen estado: sin incidentes activos",
+					globalGoodText: "Los avisos recientes estan como resueltos u operativos.",
+					lastUpdatePrefix: "Ultima actualizacion:",
+					statesCheckedPrefix: "Estados verificados:",
+					statesCheckedActive: "activos",
+					statesCheckedResolved: "resueltos/operativos",
+					emptyNoAlerts: "No hay alertas activas en este momento.",
+					noDescriptionDetailed: "Sin descripcion detallada.",
+					updatedAtLabel: "Actualizado:",
+					cfUnknownStatus: "sin estado",
+					cfNoDetails: "Sin detalles por ahora.",
+					cfWithAlerts: "con alerta",
+					cfStablePlural: "estables",
+					cfNoComponents: "Cloudflare sin componentes detallados en esta consulta.",
+					cfNoQuery: "Sin consulta",
+					cfValidationFailed: "No fue posible validar los servicios de Cloudflare ahora.",
+					cfErrorContent: "No pudimos consultar el estado de Cloudflare en este momento. El panel de Meta sigue activo y actualizando normalmente.",
+					metaConsultFailedTitle: "No fue posible consultar ahora",
+					metaConsultFailedText: "Intenta de nuevo en algunos minutos.",
+					metaNoRecentUpdate: "Sin actualizacion reciente",
+					metaStateValidationFailed: "No fue posible validar el estado de las respuestas.",
+					metaErrorContent: "No pudimos cargar los datos de Meta en este momento. Verifica tu conexion e intenta recargar la pagina.",
+				},
+			};
+
+			let currentLanguage = "pt";
+			let latestMetaData = null;
+			let latestCloudflareData = null;
+
+			function t(key) {
+				return TEXTS[currentLanguage]?.[key] || TEXTS.pt[key] || key;
+			}
+
+			function localeCode() {
+				return currentLanguage === "es" ? "es-419" : "pt-BR";
+			}
+
+			function applyStaticTexts() {
+				document.getElementById("eyebrowText").textContent = t("eyebrowText");
+				document.getElementById("mainTitle").textContent = t("mainTitle");
+				document.getElementById("mainSubtitle").textContent = t("mainSubtitle");
+				document.getElementById("guideOkTitle").textContent = t("guideOkTitle");
+				document.getElementById("guideOkText").textContent = t("guideOkText");
+				document.getElementById("guideWarnTitle").textContent = t("guideWarnTitle");
+				document.getElementById("guideWarnText").textContent = t("guideWarnText");
+				document.getElementById("guideBadTitle").textContent = t("guideBadTitle");
+				document.getElementById("guideBadText").textContent = t("guideBadText");
+				document.getElementById("activeCountLabel").textContent = t("activeCountLabel");
+				document.getElementById("metaTitle").textContent = t("metaTitle");
+				document.getElementById("metaSource").textContent = t("metaSource");
+				document.getElementById("metaSub").textContent = t("metaSub");
+				document.getElementById("cfTitle").textContent = t("cfTitle");
+				document.getElementById("cfSource").textContent = t("cfSource");
+				document.getElementById("cfSub").textContent = t("cfSub");
+				document.getElementById("cfOverallLabel").textContent = t("cfOverallLabel");
+				document.getElementById("cfAffectedLabel").textContent = t("cfAffectedLabel");
+				document.getElementById("cfStableLabel").textContent = t("cfStableLabel");
+				document.getElementById("footerText").textContent = t("footerText");
+				reloadBtn.textContent = t("reloadNow");
+				if (!reloadHelp.dataset.manualDone) {
+					reloadHelp.textContent = t("reloadHelpInitial");
+				}
+			}
+
+			function setLanguage(lang) {
+				currentLanguage = lang === "es" ? "es" : "pt";
+				document.documentElement.lang = currentLanguage === "es" ? "es-419" : "pt-BR";
+				langPt.classList.toggle("active", currentLanguage === "pt");
+				langEs.classList.toggle("active", currentLanguage === "es");
+				applyStaticTexts();
+
+				if (latestMetaData) {
+					render(latestMetaData);
+				}
+				if (latestCloudflareData) {
+					renderCloudflare(latestCloudflareData);
+				}
+			}
 
 			function classifyState(rawStatus, rawDescription = "") {
 				const source = `${String(rawStatus || "")} ${String(rawDescription || "")}`.toLowerCase();
@@ -357,8 +825,8 @@
 					source.includes("recovered")
 				) {
 					return {
-						label: "Tudo funcionando normalmente",
-						text: "Nao ha sinal de instabilidade relevante.",
+						label: t("okLabel"),
+						text: t("okText"),
 						color: "var(--ok)",
 						level: "ok",
 					};
@@ -372,34 +840,34 @@
 					source.includes("monitoring")
 				) {
 					return {
-						label: "Alguma lentidao pontual",
-						text: "Pode haver pequenas falhas para parte dos usuarios.",
+						label: t("warnLabel"),
+						text: t("warnText"),
 						color: "var(--warn)",
 						level: "warn",
 					};
 				}
 
 				return {
-					label: "Instabilidade importante em andamento",
-					text: "A Meta informou falhas que podem afetar envio, recebimento ou conexao.",
+					label: t("badLabel"),
+					text: t("badText"),
 					color: "var(--bad)",
 					level: "bad",
 				};
 			}
 
 			function friendlyTitle(description, index) {
-				if (!description) return `Servico ${index + 1}`;
+				if (!description) return `${t("servicePrefix")} ${index + 1}`;
 				const match = description.match(/impacting\s+([^\.]+)/i);
 				if (match && match[1]) {
-					return `Problema em ${match[1].trim()}`;
+					return `${t("problemInPrefix")} ${match[1].trim()}`;
 				}
-				return `Servico ${index + 1}`;
+				return `${t("servicePrefix")} ${index + 1}`;
 			}
 
 			function formatDate(isoDate) {
-				if (!isoDate) return "Sem horario informado";
+				if (!isoDate) return t("noTime");
 				const date = new Date(isoDate);
-				return date.toLocaleString("pt-BR", {
+				return date.toLocaleString(localeCode(), {
 					dateStyle: "short",
 					timeStyle: "short",
 				});
@@ -410,6 +878,99 @@
 				if (!posts.length) return null;
 				posts.sort((a, b) => new Date(b.time) - new Date(a.time));
 				return posts[0];
+			}
+
+			function humanizeStatus(rawStatus = "") {
+				const value = String(rawStatus || "").toLowerCase().trim();
+
+				if (!value) return t("statusNone");
+				if (value.includes("operational")) return t("statusOperational");
+				if (value.includes("resolved")) return t("statusResolved");
+				if (value.includes("degraded")) return t("statusDegraded");
+				if (value.includes("partial")) return t("statusPartial");
+				if (value.includes("investigating")) return t("statusInvestigating");
+				if (value.includes("monitoring")) return t("statusMonitoring");
+				if (value.includes("major")) return t("statusMajor");
+				if (value.includes("minor")) return t("statusMinor");
+				if (value.includes("outage")) return t("statusOutage");
+				if (value.includes("critical")) return t("statusCritical");
+
+				return rawStatus;
+			}
+
+			function escapeHtml(value = "") {
+				return String(value || "")
+					.replaceAll("&", "&amp;")
+					.replaceAll("<", "&lt;")
+					.replaceAll(">", "&gt;")
+					.replaceAll('"', "&quot;")
+					.replaceAll("'", "&#39;");
+			}
+
+			function classifyCloudflareIndicator(indicatorValue = "") {
+				const indicator = String(indicatorValue || "").toLowerCase().trim();
+
+				if (["none", "operational", "ok", "resolved"].includes(indicator)) {
+					return {
+						label: t("cfAllStable"),
+						text: t("cfAllStableText"),
+						level: "ok",
+					};
+				}
+
+				if (["minor", "degraded", "warning", "monitoring", "investigating"].includes(indicator)) {
+					return {
+						label: t("cfOscillation"),
+						text: t("cfOscillationText"),
+						level: "warn",
+					};
+				}
+
+				if (["major", "critical", "outage", "partial_outage"].includes(indicator)) {
+					return {
+						label: t("cfImportantInstability"),
+						text: t("cfImportantInstabilityText"),
+						level: "bad",
+					};
+				}
+
+				return {
+					label: t("cfInAnalysis"),
+					text: t("cfInAnalysisText"),
+					level: "warn",
+				};
+			}
+
+			function normalizeCloudflareLevel(value = "") {
+				const status = String(value || "").toLowerCase().trim();
+
+				if (
+					status.includes("operational") ||
+					status.includes("resolved") ||
+					status.includes("ok")
+				) {
+					return "ok";
+				}
+
+				if (
+					status.includes("degraded") ||
+					status.includes("minor") ||
+					status.includes("partial") ||
+					status.includes("investigating") ||
+					status.includes("monitoring")
+				) {
+					return "warn";
+				}
+
+				if (
+					status.includes("major") ||
+					status.includes("outage") ||
+					status.includes("critical")
+				) {
+					return "bad";
+				}
+
+				return "warn";
 			}
 
 			async function fetchOutages() {
@@ -426,10 +987,26 @@
 				}
 			}
 
+			async function fetchCloudflareStatus() {
+				try {
+					const direct = await fetch(CLOUDFLARE_STATUS_URL, { cache: "no-store" });
+					if (!direct.ok) throw new Error("Falha no endpoint Cloudflare");
+					return await direct.json();
+				} catch (_err) {
+					const viaProxy = await fetch(`${FALLBACK_PROXY}${encodeURIComponent(CLOUDFLARE_STATUS_URL)}`, {
+						cache: "no-store",
+					});
+					if (!viaProxy.ok) throw new Error("Falha no endpoint Cloudflare alternativo");
+					return await viaProxy.json();
+				}
+			}
+
 			function render(data) {
 				if (!Array.isArray(data)) {
-					throw new Error("Resposta inesperada da API.");
+					throw new Error(t("responseUnexpectedApi"));
 				}
+
+				latestMetaData = data;
 
 				const ordered = [...data].sort((a, b) => new Date(b.time) - new Date(a.time));
 				const analyzed = ordered.map((incident, index) => {
@@ -451,8 +1028,8 @@
 				const statusInfo =
 					active.length === 0
 						? {
-							label: "Status bom: sem incidentes ativos",
-							text: "Os avisos recentes estao como resolvidos ou operacionais.",
+							label: t("globalGoodStatus"),
+							text: t("globalGoodText"),
 							color: "var(--ok)",
 							level: "ok",
 						}
@@ -461,14 +1038,14 @@
 				statusDot.style.background = statusInfo.color;
 				statusTitle.textContent = statusInfo.label;
 				statusText.textContent = statusInfo.text;
-				lastUpdate.textContent = `Ultima atualizacao: ${formatDate(latest?.incident?.time)}`;
-				responseState.textContent = `Estados verificados: ${active.length} ativos, ${resolved.length} resolvidos/operacionais.`;
+				lastUpdate.textContent = `${t("lastUpdatePrefix")} ${formatDate(latest?.incident?.time)}`;
+				responseState.textContent = `${t("statesCheckedPrefix")} ${active.length} ${t("statesCheckedActive")}, ${resolved.length} ${t("statesCheckedResolved")}.`;
 				incidentCount.textContent = String(active.length);
-				resolvedCount.textContent = `${resolved.length} servicos ja resolvidos`;
+				resolvedCount.textContent = `${resolved.length} ${t("resolvedCountSuffix")}`;
 
 				if (analyzed.length === 0) {
 					content.className = "empty";
-					content.textContent = "Nao ha alertas ativos neste momento.";
+					content.textContent = t("emptyNoAlerts");
 					return;
 				}
 
@@ -477,17 +1054,20 @@
 
 				[...active, ...resolved].slice(0, 10).forEach((item) => {
 					const title = friendlyTitle(item.post?.description, item.index);
+					const friendlyStatus = humanizeStatus(item.status);
+					const safeTitle = escapeHtml(title);
+					const safeDescription = escapeHtml(item.post?.description || t("noDescriptionDetailed"));
 
 					const li = document.createElement("li");
 					li.className = `incident-item ${item.state.level}`;
 
 					li.innerHTML = `
 						<div class="incident-head">
-							<p class="incident-title">${title}</p>
-							<span class="badge" style="color:${item.state.color}">${item.status}</span>
+							<p class="incident-title">${safeTitle}</p>
+							<span class="badge ${item.state.level}">${escapeHtml(friendlyStatus)}</span>
 						</div>
-						<p class="incident-desc">${item.post?.description || "Sem descricao detalhada."}</p>
-						<p class="incident-desc"><strong>Atualizado:</strong> ${formatDate(item.incident.time)}</p>
+						<p class="incident-desc">${safeDescription}</p>
+						<p class="incident-desc"><strong>${t("updatedAtLabel")}</strong> ${formatDate(item.incident.time)}</p>
 					`;
 
 					list.appendChild(li);
@@ -498,37 +1078,127 @@
 				content.appendChild(list);
 			}
 
+			function renderCloudflare(summaryData) {
+				if (!summaryData || !Array.isArray(summaryData.components)) {
+					throw new Error(t("responseUnexpectedCf"));
+				}
+
+				latestCloudflareData = summaryData;
+
+				const indicatorState = classifyCloudflareIndicator(summaryData?.status?.indicator || "");
+				const components = summaryData.components
+					.filter((item) => item && item.name)
+					.map((item) => {
+						const level = normalizeCloudflareLevel(item.status || "");
+						return {
+							name: item.name,
+							status: item.status || t("cfUnknownStatus"),
+							onlyDescription: item.description || t("cfNoDetails"),
+							level,
+						};
+					});
+
+				const affected = components.filter((item) => item.level !== "ok");
+				const stable = components.filter((item) => item.level === "ok");
+
+				cfOverall.textContent = indicatorState.label;
+				cfAffected.textContent = String(affected.length);
+				cfStable.textContent = String(stable.length);
+				cfState.textContent = `${indicatorState.text} (${affected.length} ${t("cfWithAlerts")}, ${stable.length} ${t("cfStablePlural")}).`;
+
+				if (!components.length) {
+					cfContent.className = "empty";
+					cfContent.textContent = t("cfNoComponents");
+					return;
+				}
+
+				const list = document.createElement("ul");
+				list.className = "incident-list";
+
+				[...affected, ...stable].slice(0, 12).forEach((item) => {
+					const safeName = escapeHtml(item.name);
+					const safeDesc = escapeHtml(item.onlyDescription);
+					const statusLabel = escapeHtml(humanizeStatus(item.status));
+					const li = document.createElement("li");
+					li.className = `incident-item ${item.level}`;
+
+					li.innerHTML = `
+						<div class="incident-head">
+							<p class="incident-title">${safeName}</p>
+							<span class="badge ${item.level}">${statusLabel}</span>
+						</div>
+						<p class="incident-desc">${safeDesc}</p>
+					`;
+
+					list.appendChild(li);
+				});
+
+				cfContent.className = "";
+				cfContent.innerHTML = "";
+				cfContent.appendChild(list);
+			}
+
+			function renderCloudflareError() {
+				cfOverall.textContent = t("cfNoQuery");
+				cfAffected.textContent = "--";
+				cfStable.textContent = "--";
+				cfState.textContent = t("cfValidationFailed");
+				cfContent.className = "error";
+				cfContent.textContent = t("cfErrorContent");
+			}
+
 			async function load(isManual = false) {
 				reloadBtn.disabled = true;
-				reloadBtn.textContent = "Atualizando...";
+				reloadBtn.textContent = t("reloading");
 				content.className = "loading";
-				content.textContent = "Carregando comunicados oficiais...";
+				content.textContent = t("metaLoadingContent");
+				cfContent.className = "loading";
+				cfContent.textContent = t("cfLoadingContent");
 
 				try {
-					const data = await fetchOutages();
-					render(data);
+					const [metaResult, cloudflareResult] = await Promise.allSettled([
+						fetchOutages(),
+						fetchCloudflareStatus(),
+					]);
+
+					if (metaResult.status === "fulfilled") {
+						render(metaResult.value);
+					} else {
+						throw metaResult.reason;
+					}
+
+					if (cloudflareResult.status === "fulfilled") {
+						renderCloudflare(cloudflareResult.value);
+					} else {
+						renderCloudflareError();
+					}
+
 					if (isManual) {
-						reloadHelp.textContent = `Ultima consulta manual: ${new Date().toLocaleTimeString("pt-BR")}`;
+						reloadHelp.dataset.manualDone = "true";
+						reloadHelp.textContent = `${t("reloadHelpPrefix")} ${new Date().toLocaleTimeString(localeCode())}`;
 					}
 				} catch (err) {
 					statusDot.style.background = "var(--bad)";
-					statusTitle.textContent = "Nao foi possivel consultar agora";
-					statusText.textContent = "Tente novamente em alguns minutos.";
-					lastUpdate.textContent = "Sem atualizacao recente";
-					responseState.textContent = "Nao foi possivel validar o estado das respostas.";
+					statusTitle.textContent = t("metaConsultFailedTitle");
+					statusText.textContent = t("metaConsultFailedText");
+					lastUpdate.textContent = t("metaNoRecentUpdate");
+					responseState.textContent = t("metaStateValidationFailed");
 					incidentCount.textContent = "--";
-					resolvedCount.textContent = "-- servicos ja resolvidos";
+					resolvedCount.textContent = `-- ${t("resolvedCountSuffix")}`;
 
 					content.className = "error";
-					content.textContent =
-						"Nao conseguimos carregar os dados da Meta neste momento. Verifique sua conexao e tente recarregar a pagina.";
+					content.textContent = t("metaErrorContent");
+					renderCloudflareError();
 					console.error(err);
 				} finally {
 					reloadBtn.disabled = false;
-					reloadBtn.textContent = "Recarregar agora";
+					reloadBtn.textContent = t("reloadNow");
 				}
 			}
 
+			langPt.addEventListener("click", () => setLanguage("pt"));
+			langEs.addEventListener("click", () => setLanguage("es"));
+			setLanguage("pt");
 			reloadBtn.addEventListener("click", () => load(true));
 			load();
 			setInterval(load, 120000);
